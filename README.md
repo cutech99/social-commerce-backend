@@ -430,27 +430,121 @@ GET     /api/users/me/follows                   내가 팔로우한 판매자 �
 
 ## ERD 초안
 
-```text
-User 1 ─ N Product
-User 1 ─ 1 Cart
-Cart 1 ─ N CartItem
-Product 1 ─ N CartItem
+```mermaid
+erDiagram
+    USER ||--o{ PRODUCT : sells
+    USER ||--|| CART : has
+    CART ||--o{ CART_ITEM : contains
+    PRODUCT ||--o{ CART_ITEM : added_to
 
-User 1 ─ N Order
-Order 1 ─ N OrderItem
-Product 1 ─ N OrderItem
+    USER ||--o{ ORDERS : places
+    ORDERS ||--o{ ORDER_ITEM : contains
+    PRODUCT ||--o{ ORDER_ITEM : ordered_as
 
-Order 1 ─ 1 Payment
-User 1 ─ N Settlement
+    ORDERS ||--|| PAYMENT : paid_by
+    USER ||--o{ SETTLEMENT : receives
 
-User 1 ─ N Review
-Product 1 ─ N Review
+    USER ||--o{ REVIEW : writes
+    PRODUCT ||--o{ REVIEW : has
 
-User 1 ─ N Like
-Product 1 ─ N Like
+    USER ||--o{ PRODUCT_LIKE : likes
+    PRODUCT ||--o{ PRODUCT_LIKE : liked_by
 
-User 1 ─ N Follow
-User 1 ─ N Follow
+    USER ||--o{ FOLLOW : follows
+    USER ||--o{ FOLLOW : followed_by
+
+    USER {
+        Long id
+        String email
+        String password
+        String name
+        String role
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+
+    PRODUCT {
+        Long id
+        Long sellerId
+        String name
+        String description
+        int price
+        int stockQuantity
+        String category
+        String status
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+
+    CART {
+        Long id
+        Long userId
+    }
+
+    CART_ITEM {
+        Long id
+        Long cartId
+        Long productId
+        int quantity
+    }
+
+    ORDERS {
+        Long id
+        Long userId
+        int totalPrice
+        String orderStatus
+        LocalDateTime createdAt
+    }
+
+    ORDER_ITEM {
+        Long id
+        Long orderId
+        Long productId
+        int orderPrice
+        int quantity
+    }
+
+    PAYMENT {
+        Long id
+        Long orderId
+        int paymentAmount
+        String paymentStatus
+        LocalDateTime paidAt
+    }
+
+    SETTLEMENT {
+        Long id
+        Long sellerId
+        int totalSalesAmount
+        int commissionAmount
+        int settlementAmount
+        String settlementStatus
+        LocalDateTime settledAt
+    }
+
+    REVIEW {
+        Long id
+        Long userId
+        Long productId
+        int rating
+        String content
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+
+    PRODUCT_LIKE {
+        Long id
+        Long userId
+        Long productId
+        LocalDateTime createdAt
+    }
+
+    FOLLOW {
+        Long id
+        Long followerId
+        Long sellerId
+        LocalDateTime createdAt
+    }
 ```
 
 ### 관계 설명
