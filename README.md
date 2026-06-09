@@ -291,7 +291,6 @@ CANCELED
 
 ---
 
-````markdown
 ## 아키텍처 초안
 
 ```mermaid
