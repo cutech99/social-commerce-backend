@@ -319,7 +319,7 @@ flowchart TD
     Review --> DB
     Like --> DB
     Follow --> DB
-
+```
 ### 계층별 역할
 
 - Controller: 클라이언트의 HTTP 요청을 받고 응답을 반환합니다.
