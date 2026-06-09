@@ -291,23 +291,34 @@ CANCELED
 
 ---
 
+````markdown
 ## 아키텍처 초안
 
-```text
-Client
-  |
-  v
-Controller
-  |
-  v
-Service
-  |
-  v
-Repository
-  |
-  v
-Database
-```
+```mermaid
+flowchart TD
+    Client[Client / Frontend] --> API[Spring Boot Backend]
+
+    API --> Auth[Auth Module]
+    API --> User[User Module]
+    API --> Product[Product Module]
+    API --> Cart[Cart Module]
+    API --> Order[Order Module]
+    API --> Payment[Payment Module]
+    API --> Settlement[Settlement Module]
+    API --> Review[Review Module]
+    API --> Like[Like Module]
+    API --> Follow[Follow Module]
+
+    Auth --> DB[(MySQL Database)]
+    User --> DB
+    Product --> DB
+    Cart --> DB
+    Order --> DB
+    Payment --> DB
+    Settlement --> DB
+    Review --> DB
+    Like --> DB
+    Follow --> DB
 
 ### 계층별 역할
 
